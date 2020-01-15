@@ -17,7 +17,7 @@ const fastify_1 = __importDefault(require("fastify"));
 const fastify = fastify_1.default({ logger: true });
 // Declare a route
 fastify.get('/', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    return { hello: 'world' };
+    return { hey: 'bro' };
 }));
 // Run the server!
 const start = () => __awaiter(void 0, void 0, void 0, function* () {

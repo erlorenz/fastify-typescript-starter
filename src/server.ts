@@ -5,7 +5,7 @@ const fastify = fastifymodule({ logger: true });
 
 // Declare a route
 fastify.get('/', async (request, reply) => {
-  return { hello: 'world' };
+  return { hey: 'bro' };
 });
 
 // Run the server!
@@ -13,7 +13,6 @@ fastify.get('/', async (request, reply) => {
 const start = async () => {
   try {
     await fastify.listen(3000);
-    fastify.log.info(`Server listening on port 3000`);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
