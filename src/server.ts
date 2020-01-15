@@ -1,12 +1,23 @@
-import fastify from 'fastify';
+import fastifymodule from 'fastify';
 
-const server = fastify({ logger: true });
+// Instantiate the framework
+const fastify = fastifymodule({ logger: true });
 
-server.listen(3000, (err, address) => {
-  if (err) {
-    console.log(err);
-    process.exit(1);
-  } else {
-    console.log('Server is up and running on port 3000....');
-  }
+// Declare a route
+fastify.get('/', async (request, reply) => {
+  return { hello: 'world' };
 });
+
+// Run the server!
+
+const start = async () => {
+  try {
+    await fastify.listen(3000);
+    fastify.log.info(`Server listening on port 3000`);
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();
