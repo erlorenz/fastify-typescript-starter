@@ -1,20 +1,45 @@
-import fastifymodule from 'fastify';
+import Fastify from 'fastify';
+import { Http2ServerResponse } from 'http2';
 
 // Instantiate the framework
-const fastify = fastifymodule({ logger: true });
+const server = Fastify({ logger: true });
 
 // Declare a route
-fastify.get('/', async (request, reply) => {
-  return { hey: 'bro' };
+server.get('/', async (request, reply) => {
+  return { hey: 'yo' };
+});
+
+// SSE Route
+server.get('/sse', async (request, reply) => {
+  try {
+    reply.raw.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive',
+    });
+
+    reply.raw.write(`data: Connection established!\n\n`);
+
+    setTimeout(() => {
+      reply.raw.write(`data: After sending!\n\n`);
+    }, 1000);
+
+    setTimeout(() => {
+      reply.raw.write(`data: All finished!!\n\n`);
+      reply.raw.end();
+    }, 2000);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // Run the server!
 
 const start = async () => {
   try {
-    await fastify.listen(3000);
+    await server.listen(3000);
   } catch (err) {
-    fastify.log.error(err);
+    server.log.error(err);
     process.exit(1);
   }
 };
